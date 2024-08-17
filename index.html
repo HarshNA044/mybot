@@ -1,0 +1,131 @@
+<!--Chat bot for website-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Chat Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+           
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 350px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+            display: inline-block;
+        }
+
+        .message.bot {
+            background-color: #e1f5fe;
+            color: #0277bd;
+            align-self: flex-start;
+        }
+
+        .message.user {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+            align-self: flex-end;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 15px;
+            border: none;
+            border-top: 1px solid #ddd;
+            outline: none;
+        }
+
+        button {
+            width: 70px;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-top: 1px solid #ddd;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .input-container {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Bharat Chat</h1>
+    <h6 style="text-align: center ">Developed by Harsh</h6>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        const responses = {
+            "hi": "Hello! How can I assist you today?",
+            "hello": "Hi there! How can I help you?",
+            "how are you": "I'm just a bot, but I'm here to help you!",
+            "what is your name": "I am a simple chat bot created for this example.",
+            "bye": "Goodbye! Have a nice day!"
+        };
+
+        function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const message = inputField.value.toLowerCase();
+            addMessage(message, 'user');
+            inputField.value = '';
+
+            const response = responses[message] || "I'm sorry, I don't understand that.";
+            setTimeout(() => addMessage(response, 'bot'), 500);
+        }
+
+        function addMessage(text, sender) {
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = sender.charAt(0).toUpperCase() + sender.slice(1) + ': ' + text;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
